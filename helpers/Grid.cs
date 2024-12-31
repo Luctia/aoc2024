@@ -94,6 +94,50 @@ internal class Grid(string[] lines)
         return lines[position.y][position.x - 1];
     }
 
+    public char? AboveRightOf((int x, int y) position)
+    {
+        var pos = (position.x + 1, position.y - 1);
+        if (IsOutOfBounds(pos))
+        {
+            return null;
+        }
+
+        return lines[pos.Item2][pos.Item1];
+    }
+
+    public char? AboveLeftOf((int x, int y) position)
+    {
+        var pos = (position.x - 1, position.y - 1);
+        if (IsOutOfBounds(pos))
+        {
+            return null;
+        }
+
+        return lines[pos.Item2][pos.Item1];
+    }
+
+    public char? UnderRightOf((int x, int y) position)
+    {
+        var pos = (position.x + 1, position.y + 1);
+        if (IsOutOfBounds(pos))
+        {
+            return null;
+        }
+
+        return lines[pos.Item2][pos.Item1];
+    }
+
+    public char? UnderLeftOf((int x, int y) position)
+    {
+        var pos = (position.x - 1, position.y + 1);
+        if (IsOutOfBounds(pos))
+        {
+            return null;
+        }
+
+        return lines[pos.Item2][pos.Item1];
+    }
+
     public List<(int, int, char)> GetAllSquares()
     {
         List<(int, int, char)> res = new();
@@ -103,6 +147,128 @@ internal class Grid(string[] lines)
             {
                 res.Add((x, y, lines[y][x]));
             }
+        }
+
+        return res;
+    }
+
+    public List<(int, int, char)> GetEightAround((int x, int y) coords)
+    {
+        List<(int, int, char)> res = [
+            (coords.x - 1, coords.y - 1, lines[coords.y - 1][coords.x - 1]),
+            (coords.x, coords.y - 1, lines[coords.y - 1][coords.x]),
+            (coords.x + 1, coords.y - 1, lines[coords.y - 1][coords.x + 1]),
+            (coords.x - 1, coords.y, lines[coords.y][coords.x - 1]),
+            (coords.x + 1, coords.y, lines[coords.y][coords.x + 1]),
+            (coords.x - 1, coords.y + 1, lines[coords.y + 1][coords.x - 1]),
+            (coords.x, coords.y + 1, lines[coords.y + 1][coords.x]),
+            (coords.x + 1, coords.y + 1, lines[coords.y + 1][coords.x + 1])
+        ];
+        return res;
+    }
+
+    public List<(int, int, char?)> GetFourAround((int x, int y) coords)
+    {
+        List<(int, int, char?)> res = [
+            (coords.x, coords.y - 1, lines[coords.y - 1]?[coords.x] ?? null),
+            (coords.x - 1, coords.y, lines[coords.y]?[coords.x - 1] ?? null),
+            (coords.x + 1, coords.y, lines[coords.y]?[coords.x + 1] ?? null),
+            (coords.x, coords.y + 1, lines[coords.y + 1]?[coords.x] ?? null)
+        ];
+        return res;
+    }
+
+    public IEnumerable<char> ReadUpwards((int x, int y) start)
+    {
+        List<char> res = [];
+        while (!IsOutOfBounds(start))
+        {
+            res.Add(lines[start.y][start.x]);
+            start = (start.x, start.y - 1);
+        }
+
+        return res;
+    }
+
+    public IEnumerable<char> ReadDownwards((int x, int y) start)
+    {
+        List<char> res = [];
+        while (!IsOutOfBounds(start))
+        {
+            res.Add(lines[start.y][start.x]);
+            start = (start.x, start.y + 1);
+        }
+
+        return res;
+    }
+
+    public IEnumerable<char> ReadRight((int x, int y) start)
+    {
+        List<char> res = [];
+        while (!IsOutOfBounds(start))
+        {
+            res.Add(lines[start.y][start.x]);
+            start = (start.x + 1, start.y);
+        }
+
+        return res;
+    }
+
+    public IEnumerable<char> ReadLeft((int x, int y) start)
+    {
+        List<char> res = [];
+        while (!IsOutOfBounds(start))
+        {
+            res.Add(lines[start.y][start.x]);
+            start = (start.x - 1, start.y);
+        }
+
+        return res;
+    }
+
+    public IEnumerable<char> ReadUpRight((int x, int y) start)
+    {
+        List<char> res = [];
+        while (!IsOutOfBounds(start))
+        {
+            res.Add(lines[start.y][start.x]);
+            start = (start.x + 1, start.y - 1);
+        }
+
+        return res;
+    }
+
+    public IEnumerable<char> ReadUpLeft((int x, int y) start)
+    {
+        List<char> res = [];
+        while (!IsOutOfBounds(start))
+        {
+            res.Add(lines[start.y][start.x]);
+            start = (start.x - 1, start.y - 1);
+        }
+
+        return res;
+    }
+
+    public IEnumerable<char> ReadDownRight((int x, int y) start)
+    {
+        List<char> res = [];
+        while (!IsOutOfBounds(start))
+        {
+            res.Add(lines[start.y][start.x]);
+            start = (start.x + 1, start.y + 1);
+        }
+
+        return res;
+    }
+
+    public IEnumerable<char> ReadDownLeft((int x, int y) start)
+    {
+        List<char> res = [];
+        while (!IsOutOfBounds(start))
+        {
+            res.Add(lines[start.y][start.x]);
+            start = (start.x - 1, start.y + 1);
         }
 
         return res;

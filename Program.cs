@@ -7,7 +7,7 @@ internal static class Program
     [STAThread]
     private static void Main()
     {
-        new Day08().Part1();
-        new Day08().Part2();
+        new Day04().Part1();
+        new Day04().Part2();
     }
 }
