@@ -7,7 +7,13 @@ internal static class Program
     [STAThread]
     private static void Main()
     {
-        new Day04().Part1();
-        new Day04().Part2();
+        var watch = System.Diagnostics.Stopwatch.StartNew();
+        new Day06().Part1();
+        watch.Stop();
+        Console.WriteLine(watch.ElapsedMilliseconds);
+        watch = System.Diagnostics.Stopwatch.StartNew();
+        new Day06().Part2();
+        watch.Stop();
+        Console.WriteLine(watch.ElapsedMilliseconds);
     }
 }

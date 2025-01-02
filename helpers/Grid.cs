@@ -40,10 +40,15 @@ internal class Grid(string[] lines)
         return lines[position.y][position.x];
     }
 
+    public void SetCharAt((int x, int y) position, char value)
+    {
+        lines[position.y] = lines[position.y].Insert(position.x, value.ToString()).Remove(position.x + 1, 1);
+    }
+
     public (int, int)[] GetAllPositions(char c)
     { 
-        (int, int)[] res = new (int, int)[lines.Aggregate(0, (acc, l) => acc += l.Count(x => x == c))];
-        int index = 0;
+        var res = new (int, int)[lines.Aggregate(0, (acc, l) => acc + l.Count(x => x == c))];
+        var index = 0;
         for (var y = 0; y < lines.Length; y++)
         {
             for (int x = 0; x < lines[y].Length; x++)
