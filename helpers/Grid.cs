@@ -55,7 +55,7 @@ internal class Grid(string[] lines)
             {
                 if (lines[y][x] == c)
                 {
-                    res[index] = (y, x);
+                    res[index] = (x, y);
                     index++;
                 }
             }
@@ -65,7 +65,7 @@ internal class Grid(string[] lines)
 
     public char? Above((int x, int y) position)
     {
-        if (IsOutOfBounds(position))
+        if (IsOutOfBounds((position.x, position.y - 1)))
         {
             return null;
         }
@@ -74,7 +74,7 @@ internal class Grid(string[] lines)
 
     public char? Under((int x, int y) position)
     {
-        if (IsOutOfBounds(position))
+        if (IsOutOfBounds((position.x, position.y + 1)))
         {
             return null;
         }
@@ -83,7 +83,7 @@ internal class Grid(string[] lines)
 
     public char? RightOf((int x, int y) position)
     {
-        if (IsOutOfBounds(position))
+        if (IsOutOfBounds((position.x + 1, position.y)))
         {
             return null;
         }
@@ -92,7 +92,7 @@ internal class Grid(string[] lines)
 
     public char? LeftOf((int x, int y) position)
     {
-        if (IsOutOfBounds(position))
+        if (IsOutOfBounds((position.x - 1, position.y)))
         {
             return null;
         }
@@ -175,10 +175,10 @@ internal class Grid(string[] lines)
     public List<(int, int, char?)> GetFourAround((int x, int y) coords)
     {
         List<(int, int, char?)> res = [
-            (coords.x, coords.y - 1, lines[coords.y - 1]?[coords.x] ?? null),
-            (coords.x - 1, coords.y, lines[coords.y]?[coords.x - 1] ?? null),
-            (coords.x + 1, coords.y, lines[coords.y]?[coords.x + 1] ?? null),
-            (coords.x, coords.y + 1, lines[coords.y + 1]?[coords.x] ?? null)
+            (coords.x, coords.y - 1, Above(coords)),
+            (coords.x - 1, coords.y, LeftOf(coords)),
+            (coords.x + 1, coords.y, RightOf(coords)),
+            (coords.x, coords.y + 1, Under(coords))
         ];
         return res;
     }
