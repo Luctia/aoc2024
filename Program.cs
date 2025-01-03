@@ -12,7 +12,7 @@ internal static class Program
         watch.Stop();
         Console.WriteLine(watch.ElapsedMilliseconds);
         watch = System.Diagnostics.Stopwatch.StartNew();
-        new Day10().Part2();
+        new Day06().Part2();
         watch.Stop();
         Console.WriteLine(watch.ElapsedMilliseconds);
     }

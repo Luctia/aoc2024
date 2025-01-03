@@ -81,7 +81,7 @@ public class Day06 : Day
                 position = (position.x, position.y - 1);
                 if (grid.GetCharAt(position) == '#')
                 {
-                    return ((position.x + 1, position.y + 1), Direction.Right);
+                    return ((position.x, position.y + 1), Direction.Right);
                 }
                 return (position, direction);
             }
@@ -90,7 +90,7 @@ public class Day06 : Day
                 position = (position.x, position.y + 1);
                 if (grid.GetCharAt(position) == '#')
                 {
-                    return ((position.x - 1, position.y - 1), Direction.Left);
+                    return ((position.x, position.y - 1), Direction.Left);
                 }
                 return (position, direction);
             }
@@ -99,7 +99,7 @@ public class Day06 : Day
                 position = (position.x + 1, position.y);
                 if (grid.GetCharAt(position) == '#')
                 {
-                    return ((position.x - 1, position.y + 1), Direction.Down);
+                    return ((position.x - 1, position.y), Direction.Down);
                 }
                 return (position, direction);
             }
@@ -108,7 +108,7 @@ public class Day06 : Day
                 position = (position.x - 1, position.y);
                 if (grid.GetCharAt(position) == '#')
                 {
-                    return ((position.x + 1, position.y - 1), Direction.Up);
+                    return ((position.x + 1, position.y), Direction.Up);
                 }
                 return (position, direction);
             }
