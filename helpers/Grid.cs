@@ -2,17 +2,19 @@
 
 internal class Grid(string[] lines)
 {
+    public string[] Lines { get; set; } = lines;
+
     public bool IsOutOfBounds((int x, int y) position)
     {
-        return position.y < 0 || position.y >= lines.Length || position.x < 0 || position.x >= lines[0].Length;
+        return position.y < 0 || position.y >= Lines.Length || position.x < 0 || position.x >= Lines[0].Length;
     }
 
     public (int, int) GetGuardPosition()
     {
         var y = -1;
-        for (var i = 0; i < lines.Length; i++)
+        for (var i = 0; i < Lines.Length; i++)
         {
-            if (lines[i].Contains('^'))
+            if (Lines[i].Contains('^'))
             {
                 y = i;
                 break;
@@ -20,9 +22,9 @@ internal class Grid(string[] lines)
         }
 
         var x = 0;
-        for (var i = 0; i < lines[y].Length; i++)
+        for (var i = 0; i < Lines[y].Length; i++)
         {
-            if (lines[y][i] == '^')
+            if (Lines[y][i] == '^')
             {
                 x = i;
             }
@@ -37,23 +39,23 @@ internal class Grid(string[] lines)
         {
             return '.';
         }
-        return lines[position.y][position.x];
+        return Lines[position.y][position.x];
     }
 
     public void SetCharAt((int x, int y) position, char value)
     {
-        lines[position.y] = lines[position.y].Insert(position.x, value.ToString()).Remove(position.x + 1, 1);
+        Lines[position.y] = Lines[position.y].Insert(position.x, value.ToString()).Remove(position.x + 1, 1);
     }
 
     public (int, int)[] GetAllPositions(char c)
     { 
-        var res = new (int, int)[lines.Aggregate(0, (acc, l) => acc + l.Count(x => x == c))];
+        var res = new (int, int)[Lines.Aggregate(0, (acc, l) => acc + l.Count(x => x == c))];
         var index = 0;
-        for (var y = 0; y < lines.Length; y++)
+        for (var y = 0; y < Lines.Length; y++)
         {
-            for (int x = 0; x < lines[y].Length; x++)
+            for (int x = 0; x < Lines[y].Length; x++)
             {
-                if (lines[y][x] == c)
+                if (Lines[y][x] == c)
                 {
                     res[index] = (x, y);
                     index++;
@@ -69,7 +71,7 @@ internal class Grid(string[] lines)
         {
             return null;
         }
-        return lines[position.y - 1][position.x];
+        return Lines[position.y - 1][position.x];
     }
 
     public char? Under((int x, int y) position)
@@ -78,7 +80,7 @@ internal class Grid(string[] lines)
         {
             return null;
         }
-        return lines[position.y + 1][position.x];
+        return Lines[position.y + 1][position.x];
     }
 
     public char? RightOf((int x, int y) position)
@@ -87,7 +89,7 @@ internal class Grid(string[] lines)
         {
             return null;
         }
-        return lines[position.y][position.x + 1];
+        return Lines[position.y][position.x + 1];
     }
 
     public char? LeftOf((int x, int y) position)
@@ -96,7 +98,7 @@ internal class Grid(string[] lines)
         {
             return null;
         }
-        return lines[position.y][position.x - 1];
+        return Lines[position.y][position.x - 1];
     }
 
     public char? AboveRightOf((int x, int y) position)
@@ -107,7 +109,7 @@ internal class Grid(string[] lines)
             return null;
         }
 
-        return lines[pos.Item2][pos.Item1];
+        return Lines[pos.Item2][pos.Item1];
     }
 
     public char? AboveLeftOf((int x, int y) position)
@@ -118,7 +120,7 @@ internal class Grid(string[] lines)
             return null;
         }
 
-        return lines[pos.Item2][pos.Item1];
+        return Lines[pos.Item2][pos.Item1];
     }
 
     public char? UnderRightOf((int x, int y) position)
@@ -129,7 +131,7 @@ internal class Grid(string[] lines)
             return null;
         }
 
-        return lines[pos.Item2][pos.Item1];
+        return Lines[pos.Item2][pos.Item1];
     }
 
     public char? UnderLeftOf((int x, int y) position)
@@ -140,17 +142,17 @@ internal class Grid(string[] lines)
             return null;
         }
 
-        return lines[pos.Item2][pos.Item1];
+        return Lines[pos.Item2][pos.Item1];
     }
 
-    public List<(int, int, char)> GetAllSquares()
+    public List<(int x, int y, char c)> GetAllSquares()
     {
         List<(int, int, char)> res = new();
-        for (int y = 0; y < lines.Length; y++)
+        for (int y = 0; y < Lines.Length; y++)
         {
-            for (int x = 0; x < lines[y].Length; x++)
+            for (int x = 0; x < Lines[y].Length; x++)
             {
-                res.Add((x, y, lines[y][x]));
+                res.Add((x, y, Lines[y][x]));
             }
         }
 
@@ -160,21 +162,21 @@ internal class Grid(string[] lines)
     public List<(int, int, char)> GetEightAround((int x, int y) coords)
     {
         List<(int, int, char)> res = [
-            (coords.x - 1, coords.y - 1, lines[coords.y - 1][coords.x - 1]),
-            (coords.x, coords.y - 1, lines[coords.y - 1][coords.x]),
-            (coords.x + 1, coords.y - 1, lines[coords.y - 1][coords.x + 1]),
-            (coords.x - 1, coords.y, lines[coords.y][coords.x - 1]),
-            (coords.x + 1, coords.y, lines[coords.y][coords.x + 1]),
-            (coords.x - 1, coords.y + 1, lines[coords.y + 1][coords.x - 1]),
-            (coords.x, coords.y + 1, lines[coords.y + 1][coords.x]),
-            (coords.x + 1, coords.y + 1, lines[coords.y + 1][coords.x + 1])
+            (coords.x - 1, coords.y - 1, Lines[coords.y - 1][coords.x - 1]),
+            (coords.x, coords.y - 1, Lines[coords.y - 1][coords.x]),
+            (coords.x + 1, coords.y - 1, Lines[coords.y - 1][coords.x + 1]),
+            (coords.x - 1, coords.y, Lines[coords.y][coords.x - 1]),
+            (coords.x + 1, coords.y, Lines[coords.y][coords.x + 1]),
+            (coords.x - 1, coords.y + 1, Lines[coords.y + 1][coords.x - 1]),
+            (coords.x, coords.y + 1, Lines[coords.y + 1][coords.x]),
+            (coords.x + 1, coords.y + 1, Lines[coords.y + 1][coords.x + 1])
         ];
         return res;
     }
 
-    public List<(int, int, char?)> GetFourAround((int x, int y) coords)
+    public HashSet<(int, int, char?)> GetFourAround((int x, int y) coords)
     {
-        List<(int, int, char?)> res = [
+        HashSet<(int, int, char?)> res = [
             (coords.x, coords.y - 1, Above(coords)),
             (coords.x - 1, coords.y, LeftOf(coords)),
             (coords.x + 1, coords.y, RightOf(coords)),
@@ -188,7 +190,7 @@ internal class Grid(string[] lines)
         List<char> res = [];
         while (!IsOutOfBounds(start))
         {
-            res.Add(lines[start.y][start.x]);
+            res.Add(Lines[start.y][start.x]);
             start = (start.x, start.y - 1);
         }
 
@@ -200,7 +202,7 @@ internal class Grid(string[] lines)
         List<char> res = [];
         while (!IsOutOfBounds(start))
         {
-            res.Add(lines[start.y][start.x]);
+            res.Add(Lines[start.y][start.x]);
             start = (start.x, start.y + 1);
         }
 
@@ -212,7 +214,7 @@ internal class Grid(string[] lines)
         List<char> res = [];
         while (!IsOutOfBounds(start))
         {
-            res.Add(lines[start.y][start.x]);
+            res.Add(Lines[start.y][start.x]);
             start = (start.x + 1, start.y);
         }
 
@@ -224,7 +226,7 @@ internal class Grid(string[] lines)
         List<char> res = [];
         while (!IsOutOfBounds(start))
         {
-            res.Add(lines[start.y][start.x]);
+            res.Add(Lines[start.y][start.x]);
             start = (start.x - 1, start.y);
         }
 
@@ -236,7 +238,7 @@ internal class Grid(string[] lines)
         List<char> res = [];
         while (!IsOutOfBounds(start))
         {
-            res.Add(lines[start.y][start.x]);
+            res.Add(Lines[start.y][start.x]);
             start = (start.x + 1, start.y - 1);
         }
 
@@ -248,7 +250,7 @@ internal class Grid(string[] lines)
         List<char> res = [];
         while (!IsOutOfBounds(start))
         {
-            res.Add(lines[start.y][start.x]);
+            res.Add(Lines[start.y][start.x]);
             start = (start.x - 1, start.y - 1);
         }
 
@@ -260,7 +262,7 @@ internal class Grid(string[] lines)
         List<char> res = [];
         while (!IsOutOfBounds(start))
         {
-            res.Add(lines[start.y][start.x]);
+            res.Add(Lines[start.y][start.x]);
             start = (start.x + 1, start.y + 1);
         }
 
@@ -272,7 +274,7 @@ internal class Grid(string[] lines)
         List<char> res = [];
         while (!IsOutOfBounds(start))
         {
-            res.Add(lines[start.y][start.x]);
+            res.Add(Lines[start.y][start.x]);
             start = (start.x - 1, start.y + 1);
         }
 
