@@ -8,11 +8,11 @@ internal static class Program
     private static void Main()
     {
         var watch = System.Diagnostics.Stopwatch.StartNew();
-        new Day12().Part1();
+        new Day13().Part1();
         watch.Stop();
         Console.WriteLine(watch.ElapsedMilliseconds);
         watch = System.Diagnostics.Stopwatch.StartNew();
-        new Day12().Part2();
+        new Day13().Part2();
         watch.Stop();
         Console.WriteLine(watch.ElapsedMilliseconds);
     }
