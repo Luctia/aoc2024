@@ -28,4 +28,4 @@ This year, I will be working with C#/.NET again.
 | Day 22 | :x: :x:                               |                                                                                    |
 | Day 23 | :x: :x:                               |                                                                                    |
 | Day 24 | :x: :x:                               |                                                                                    |
-| Day 25 | :x: :x:                               |                                                                                    |
+| Day 25 | :heavy_check_mark: :x:                |                                                                                    |
