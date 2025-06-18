@@ -7,13 +7,7 @@ public partial class Day13 : Day
   public override void Part1()
   {
     var machines = GetClawMachines();
-    long total = 0;
-    foreach (var machine in machines)
-    {
-      total += machine.GetCost();
-    }
-
-    Answer(total);
+    Answer(machines.Sum(machine => machine.GetCost()));
   }
 
   public override void Part2()
@@ -51,18 +45,11 @@ public partial class Day13 : Day
     return groups.Select(g => new ClawMachine(g)).ToHashSet();
   }
 
-  private partial class ClawMachine
+  private partial class ClawMachine(List<string> input)
   {
-    public (int x, int y) ButtonA;
-    public (int x, int y) ButtonB;
-    public (long x, long y) Prize;
-
-    public ClawMachine(List<string> input)
-    {
-      ButtonA = ExtractNumbers(input[0]);
-      ButtonB = ExtractNumbers(input[1]);
-      Prize = ExtractNumbers(input[2]);
-    }
+    private readonly (int x, int y) _buttonA = ExtractNumbers(input[0]);
+    private readonly (int x, int y) _buttonB = ExtractNumbers(input[1]);
+    private (long x, long y) _prize = ExtractNumbers(input[2]);
 
     private static (int, int) ExtractNumbers(string line)
     {
@@ -72,31 +59,44 @@ public partial class Day13 : Day
 
     public void ActivatePartB()
     {
-      Prize.x += 10000000000000;
-      Prize.y += 10000000000000;
+      _prize.x += 10000000000000;
+      _prize.y += 10000000000000;
     }
 
     public long GetCost()
     {
-      var aMax = Math.Max(Prize.x / ButtonA.x, Prize.y / ButtonA.y);
-      var bMax = Math.Max(Prize.x / ButtonB.x, Prize.y / ButtonB.y);
-      var candidates = new List<(long a, long b)>();
-      for (long a = 0; a < aMax; a++)
-      {
-        for (long b = 0; b < bMax; b++)
-        {
-          if (Prize.x == ButtonA.x * a + ButtonB.x * b && Prize.y == ButtonA.y * a + ButtonB.y * b)
-          {
-            candidates.Add((a, b));
-          }
-        }
-      }
+      double[][] matrix = [
+        [_buttonA.x, _buttonB.x, _prize.x],
+        [_buttonA.y, _buttonB.y, _prize.y]];
 
-      if (candidates.Count == 0)
+      // first row to 1 _ _
+      matrix[0][1] /= matrix[0][0];
+      matrix[0][2] /= matrix[0][0];
+      matrix[0][0] = 1;
+
+      // second row to 0 _ _
+      matrix[1][1] -= matrix[1][0] * matrix[0][1]; 
+      matrix[1][2] -= matrix[1][0] * matrix[0][2];
+      matrix[1][0] = 0;
+      
+      // second row to 0 1 _
+      matrix[1][2] *= 1 / matrix[1][1];
+      matrix[1][1] = 1;
+      
+      // first row to 1 0 _
+      matrix[0][2] -= matrix[1][2] * (matrix[0][1] /  matrix[1][1]);
+      matrix[0][1] -= matrix[1][1] * (matrix[0][1] /  matrix[1][1]);
+      
+      (double a, double b) crudeAns = (matrix[0][2],  matrix[1][2]);
+
+      (long a, long b) ans = ((long)Math.Round(crudeAns.a), (long)Math.Round(crudeAns.b));
+
+      if (_buttonA.x * ans.a + _buttonB.x * ans.b != _prize.x || _buttonA.y * ans.a + _buttonB.y * ans.b != _prize.y)
       {
         return 0;
       }
-      return candidates.Select(c => 3 * c.a + c.b).Min();
+      
+      return ans.a * 3 + ans.b;
     }
 
     [GeneratedRegex(@"^.*X.(\d+), Y.(\d+)$")]

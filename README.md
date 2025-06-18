@@ -16,7 +16,7 @@ This year, I will be working with C#/.NET again.
 | Day 10 | :heavy_check_mark: :heavy_check_mark: |         |
 | Day 11 | :heavy_check_mark: :heavy_check_mark: |         |
 | Day 12 | :heavy_check_mark: :heavy_check_mark: |         |
-| Day 13 | :x: :x:                               |         |
+| Day 13 | :heavy_check_mark: :heavy_check_mark: |         |
 | Day 14 | :x: :x:                               |         |
 | Day 15 | :x: :x:                               |         |
 | Day 16 | :x: :x:                               |         |
