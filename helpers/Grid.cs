@@ -9,12 +9,12 @@ internal class Grid(string[] lines)
         return position.y < 0 || position.y >= Lines.Length || position.x < 0 || position.x >= Lines[0].Length;
     }
 
-    public (int, int) GetGuardPosition()
+    public (int, int) GetGuardPosition(char guardIcon = '^')
     {
         var y = -1;
         for (var i = 0; i < Lines.Length; i++)
         {
-            if (Lines[i].Contains('^'))
+            if (Lines[i].Contains(guardIcon))
             {
                 y = i;
                 break;
@@ -24,7 +24,7 @@ internal class Grid(string[] lines)
         var x = 0;
         for (var i = 0; i < Lines[y].Length; i++)
         {
-            if (Lines[y][i] == '^')
+            if (Lines[y][i] == guardIcon)
             {
                 x = i;
             }
@@ -279,5 +279,34 @@ internal class Grid(string[] lines)
         }
 
         return res;
+    }
+
+    public (int x, int y)[] FindChars(char c)
+    {
+        List<(int x, int y)> result = [];
+        for (int y = 0; y < lines.Length; y++)
+        {
+            for (int x = 0; x < lines[y].Length; x++)
+            {
+                if (lines[y][x] == c)
+                {
+                    result.Add((x, y));
+                }
+            }
+        }
+        return result.ToArray();
+    }
+    
+    public Grid DeepCopy()
+    {
+        return new Grid(lines.Select(line => $"{line}").ToArray());
+    }
+
+    public void PrintGrid()
+    {
+        foreach (var line in Lines)
+        {
+            Console.WriteLine(line);
+        }
     }
 }
