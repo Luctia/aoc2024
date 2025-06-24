@@ -174,7 +174,7 @@ internal class Grid(string[] lines)
         return res;
     }
 
-    public HashSet<(int, int, char?)> GetFourAround((int x, int y) coords)
+    public HashSet<(int x, int y, char?)> GetFourAround((int x, int y) coords)
     {
         HashSet<(int, int, char?)> res = [
             (coords.x, coords.y - 1, Above(coords)),

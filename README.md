@@ -21,7 +21,7 @@ This year, I will be working with C#/.NET again.
 | Day 15 | :heavy_check_mark: :heavy_check_mark: |                                                                                    |
 | Day 16 | :x: :x:                               |                                                                                    |
 | Day 17 | :heavy_check_mark: :x:                |                                                                                    |
-| Day 18 | :x: :x:                               |                                                                                    |
+| Day 18 | :heavy_check_mark: :heavy_check_mark: | Part 2 takes 8 seconds. Kind of long, but okay enough.                             |
 | Day 19 | :x: :x:                               |                                                                                    |
 | Day 20 | :x: :x:                               |                                                                                    |
 | Day 21 | :x: :x:                               |                                                                                    |
