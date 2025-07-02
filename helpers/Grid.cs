@@ -375,4 +375,29 @@ internal class Grid(string[] lines)
 
     return result;
   }
+
+  /// <summary>
+  /// Get all coordinates of floor tiles that are a corner, i.e. have two or more adjacent walls that are not opposing.
+  /// </summary>
+  /// <param name="floorTile">The character that would indicate a floor.</param>
+  /// <param name="wallTile">The character that would indicate a wall.</param>
+  /// <returns></returns>
+  public (int x, int y)[] GetCorners(char floorTile = '.', char wallTile = '#')
+  {
+    var floors = FindChars(floorTile);
+    var corners = new List<(int x, int y)>();
+    foreach (var floor in floors)
+    {
+      var above = Above(floor);
+      var right = RightOf(floor);
+      var under = Under(floor);
+      var left = LeftOf(floor);
+      if (above == wallTile && right == wallTile || above == wallTile && left == wallTile ||
+          under == wallTile && right == wallTile || under == wallTile && left == wallTile)
+      {
+        corners.Add(floor);
+      }
+    }
+    return corners.ToArray();
+  }
 }
