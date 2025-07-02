@@ -65,9 +65,11 @@ public partial class Day13 : Day
 
     public long GetCost()
     {
-      double[][] matrix = [
+      double[][] matrix =
+      [
         [_buttonA.x, _buttonB.x, _prize.x],
-        [_buttonA.y, _buttonB.y, _prize.y]];
+        [_buttonA.y, _buttonB.y, _prize.y]
+      ];
 
       // first row to 1 _ _
       matrix[0][1] /= matrix[0][0];
@@ -75,19 +77,19 @@ public partial class Day13 : Day
       matrix[0][0] = 1;
 
       // second row to 0 _ _
-      matrix[1][1] -= matrix[1][0] * matrix[0][1]; 
+      matrix[1][1] -= matrix[1][0] * matrix[0][1];
       matrix[1][2] -= matrix[1][0] * matrix[0][2];
       matrix[1][0] = 0;
-      
+
       // second row to 0 1 _
       matrix[1][2] *= 1 / matrix[1][1];
       matrix[1][1] = 1;
-      
+
       // first row to 1 0 _
-      matrix[0][2] -= matrix[1][2] * (matrix[0][1] /  matrix[1][1]);
-      matrix[0][1] -= matrix[1][1] * (matrix[0][1] /  matrix[1][1]);
-      
-      (double a, double b) crudeAns = (matrix[0][2],  matrix[1][2]);
+      matrix[0][2] -= matrix[1][2] * (matrix[0][1] / matrix[1][1]);
+      matrix[0][1] -= matrix[1][1] * (matrix[0][1] / matrix[1][1]);
+
+      (double a, double b) crudeAns = (matrix[0][2], matrix[1][2]);
 
       (long a, long b) ans = ((long)Math.Round(crudeAns.a), (long)Math.Round(crudeAns.b));
 
@@ -95,7 +97,7 @@ public partial class Day13 : Day
       {
         return 0;
       }
-      
+
       return ans.a * 3 + ans.b;
     }
 

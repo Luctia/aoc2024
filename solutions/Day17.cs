@@ -40,6 +40,7 @@ public class Day17 : Day
       {
         return false;
       }
+
       for (int i = 0; i < instructions.Length; i++)
       {
         if (instructions[i] != computer.Output[i])
@@ -47,6 +48,7 @@ public class Day17 : Day
           return false;
         }
       }
+
       return true;
     }
   }

@@ -21,6 +21,7 @@ public class Day18 : Day
       {
         s.Append(walls.Contains((x: x1, y)) ? '#' : '.');
       }
+
       lines.Add(s.ToString());
     }
 
@@ -33,12 +34,17 @@ public class Day18 : Day
       lastSeen = lastSeen
         .Select(t => grid.GetFourAround(t).Where(t => t.Item3 != '#' && t.Item3 is not null))
         .Select(t => t.Select(x => (x.x, x.y)))
-        .Aggregate(new HashSet<(int x, int y)>(), (acc, t) => { acc.UnionWith(t); return acc; })
+        .Aggregate(new HashSet<(int x, int y)>(), (acc, t) =>
+        {
+          acc.UnionWith(t);
+          return acc;
+        })
         .Where(t => !seenTiles.Contains(t))
         .ToHashSet();
       seenTiles.UnionWith(lastSeen);
       steps++;
     }
+
     Answer(steps);
   }
 
@@ -59,6 +65,7 @@ public class Day18 : Day
         addedUpTo++;
         continue;
       }
+
       List<string> lines = [];
       for (var y = 0; y < 71; y++)
       {
@@ -67,6 +74,7 @@ public class Day18 : Day
         {
           s.Append(walls.Contains((x: x1, y)) ? '#' : '.');
         }
+
         lines.Add(s.ToString());
       }
 
@@ -79,7 +87,11 @@ public class Day18 : Day
         lastSeen = lastSeen
           .Select(t => grid.GetFourAround(t).Where(t => t.Item3 != '#' && t.Item3 is not null))
           .Select(t => t.Select(x => (x.x, x.y)))
-          .Aggregate(new HashSet<(int x, int y)>(), (acc, t) => { acc.UnionWith(t); return acc; })
+          .Aggregate(new HashSet<(int x, int y)>(), (acc, t) =>
+          {
+            acc.UnionWith(t);
+            return acc;
+          })
           .Where(t => !seenTiles.Contains(t))
           .ToHashSet();
         seenTiles.UnionWith(lastSeen);

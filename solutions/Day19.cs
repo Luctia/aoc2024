@@ -23,9 +23,10 @@ public class Day19 : Day
       res += GetCombinations(design, towels);
       Console.WriteLine(res);
     }
+
     Answer(res);
   }
-  
+
   private static int GetCombinations(ReadOnlySpan<char> design, string[] towels)
   {
     // if (design.Length == 0)

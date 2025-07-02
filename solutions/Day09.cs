@@ -61,6 +61,7 @@ public class Day09 : Day
           }
         }
       }
+
       pointer--;
     }
   }
@@ -75,13 +76,13 @@ public class Day09 : Day
       if (firstEmptySpace >= 0)
       {
         Array.Fill(fs, fs[lastFile.index], firstEmptySpace, lastFile.length);
-        Array.Fill(fs, (short) -1, lastFile.index, lastFile.length);
+        Array.Fill(fs, (short)-1, lastFile.index, lastFile.length);
       }
 
       pointer = lastFile.index - 1;
     }
   }
-  
+
   private static (int index, int length) FindLastFile(short[] fs, int startIndex)
   {
     for (int i = startIndex; i >= 0; i--)
@@ -95,9 +96,11 @@ public class Day09 : Day
           length++;
           i--;
         }
+
         return (i + 1, length);
       }
     }
+
     return (-1, -1);
   }
 
@@ -111,6 +114,7 @@ public class Day09 : Day
         {
           return i;
         }
+
         var size = 1;
         i++;
         while (i < fs.Length && fs[i] == -1)
@@ -120,6 +124,7 @@ public class Day09 : Day
           {
             return i - size + 1;
           }
+
           i++;
         }
       }
@@ -139,6 +144,7 @@ public class Day09 : Day
         i++;
         continue;
       }
+
       res += f * i;
       i++;
     }

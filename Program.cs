@@ -4,16 +4,16 @@ namespace aoc2024;
 
 internal static class Program
 {
-    [STAThread]
-    private static void Main()
-    {
-        var watch = System.Diagnostics.Stopwatch.StartNew();
-        new Day19().Part1();
-        watch.Stop();
-        Console.WriteLine(watch.ElapsedMilliseconds);
-        watch = System.Diagnostics.Stopwatch.StartNew();
-        new Day19().Part2();
-        watch.Stop();
-        Console.WriteLine(watch.ElapsedMilliseconds);
-    }
+  [STAThread]
+  private static void Main()
+  {
+    var watch = System.Diagnostics.Stopwatch.StartNew();
+    new Day19().Part1();
+    watch.Stop();
+    Console.WriteLine(watch.ElapsedMilliseconds);
+    watch = System.Diagnostics.Stopwatch.StartNew();
+    new Day19().Part2();
+    watch.Stop();
+    Console.WriteLine(watch.ElapsedMilliseconds);
+  }
 }
