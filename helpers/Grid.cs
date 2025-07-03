@@ -392,8 +392,7 @@ internal class Grid(string[] lines)
       var right = RightOf(floor);
       var under = Under(floor);
       var left = LeftOf(floor);
-      if (above == wallTile && right == wallTile || above == wallTile && left == wallTile ||
-          under == wallTile && right == wallTile || under == wallTile && left == wallTile)
+      if (above == wallTile && under == wallTile || right == wallTile && left == wallTile)
       {
         corners.Add(floor);
       }

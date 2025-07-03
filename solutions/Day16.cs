@@ -12,7 +12,7 @@ public class Day16 : Day
     var corners = grid.GetCorners();
     var straightPaths = new HashSet<((int x, int y) start, (int x, int y) end, int length)>();
     
-    // todo maybe change to maps because looking for coordinates to connect to is faster
+    // todo missing 
 
     for (int i = 0; i < corners.Length; i++)
     {
@@ -29,16 +29,18 @@ public class Day16 : Day
       }
     }
     
-    // Remove reverses
+    var tilesToStraights = new Dictionary<(int x, int y), ISet<((int x, int y) start, (int x, int y) end, int length)>>();
     foreach (var path in straightPaths)
     {
-      if (straightPaths.Contains(((path.end.x, path.end.y), (path.start.x, path.start.y), path.length)))
+      if (tilesToStraights.ContainsKey((path.start.x, path.start.y)))
       {
-        straightPaths.Remove(path);
+        tilesToStraights[(path.start.x, path.start.y)].Add(path);
+      }
+      else
+      {
+        tilesToStraights[(path.start.x, path.start.y)] = new HashSet<((int x, int y) start, (int x, int y) end, int length)> { path };
       }
     }
-    
-    // Link straight paths
   }
 
   public override void Part2()
