@@ -400,7 +400,7 @@ internal class Grid(string[] lines)
     return corners.ToArray();
   }
 
-  public int Dijkstra((int x, int y ) start, (int x, int y) end, char floorTile = '.', char wallTile = '#')
+  public int Dijkstra((int x, int y) start, (int x, int y) end, char floorTile = '.', char wallTile = '#')
   {
     HashSet<(int x, int y, int dx, int dy)> seen = [
       // TODO assumes facing east
@@ -417,23 +417,20 @@ internal class Grid(string[] lines)
       {
         return cost;
       }
+
+      if (!seen.Add((current.x + current.dx, current.y + current.dy, current.dx, current.dy)))
+      {
+        continue;
+      }
       // Straight
       if (!IsOutOfBounds((current.x + current.dx, current.y + current.dy)) &&
-          GetCharAt((current.x + current.dx, current.y + current.dy)) == floorTile &&
-          seen.Add((current.x + current.dx, current.y + current.dy, current.dx, current.dy)))
+          GetCharAt((current.x + current.dx, current.y + current.dy)) == floorTile)
       {
         q.Enqueue((current.x + current.dx, current.y + current.dy, current.dx, current.dy), cost + 1);
       }
 
-      if (seen.Add((current.x, current.y, current.dy, current.dx)))
-      {
-        q.Enqueue((current.x, current.y, current.dy, current.dx), cost + 1000);
-      }
-
-      if (seen.Add((current.x, current.y, current.dy * -1, current.dx * -1)))
-      {
-        q.Enqueue((current.x, current.y, current.dy * -1, current.dx * -1), cost + 1000);
-      }
+      q.Enqueue((current.x, current.y, current.dy, current.dx), cost + 1000);
+      q.Enqueue((current.x, current.y, current.dy * -1, current.dx * -1), cost + 1000);
     }
 
     return -1;
